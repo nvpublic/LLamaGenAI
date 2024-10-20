@@ -41,16 +41,17 @@ If you don't have Ollama installed:
 
 Download and install the Ollama software for your platform from their website.
 Start the Ollama service, which will listen on the specified port.
+
+
 Step 1: Clone the Repository or Get the Code
 If you haven't already done so, you can clone the code or place it in a directory on your machine.
-
 bash
 Copy code
 git clone https://github.com/<your-repo-name>.git
 cd <your-repo-directory>
+
 Step 2: Create a Virtual Environment (Optional but Recommended)
 It is a good practice to create a virtual environment to isolate the dependencies of the project.
-
 bash
 Copy code
 # For Windows:
@@ -58,26 +59,23 @@ python -m venv venv
 # For macOS/Linux:
 python3 -m venv venv
 Activate the virtual environment:
-
 bash
 Copy code
 # For Windows:
 venv\Scripts\activate
-
 # For macOS/Linux:
 source venv/bin/activate
+
 Step 3: Install Dependencies
 Use the requirements.txt file to install all necessary Python packages, including Flask, Flask-CORS, and requests.
 
 Create requirements.txt (if not already in the repository):
-
 txt
 Copy code
 Flask==2.1.2
 Flask-CORS==3.0.10
 requests==2.28.1
 Install the dependencies:
-
 bash
 Copy code
 pip install -r requirements.txt
@@ -90,9 +88,9 @@ Model URL: Verify the URL in the llama3 function points to the correct API endpo
 python
 Copy code
 url = "http://localhost:11434/api/chat"
+
 Step 5: Run the Ollama Service
 Ensure that the Ollama model service (Llama 3.2) is running and accessible at http://localhost:11434.
-
 Check if Ollama is running (you can use a tool like curl to check the status):
 
 bash
@@ -113,9 +111,9 @@ python3 app.py
 This will start the Flask application on http://localhost:5000.
 
 If everything is configured correctly:
-
 Your front-end will be accessible at http://localhost:5000/.
 Your API will be available at http://localhost:5000/chat for POST requests.
+
 Step 7: Test the API
 Once the application is running, you can test the chat API with a POST request:
 
