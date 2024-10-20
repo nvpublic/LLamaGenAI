@@ -5,15 +5,12 @@ import requests
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
-# Set the model name
-model_name = "llama3.2"
-
-# Define the URL for the API endpoint
+# Define the default URL for the API endpoint
 url = "http://localhost:11434/api/chat"
 
-def llama3(prompt):
+def llama3(prompt, model_name):
     data = {
-        "model": model_name,  # Use model_name variable
+        "model": model_name,  # Use the model_name passed to the function
         "messages": [
             {
                 "role": "user",
@@ -27,7 +24,7 @@ def llama3(prompt):
         "Content-Type": "application/json"
     }
 
-    # Make the POST request to the Ollama API
+    # Make the POST request to the LLaMA API
     try:
         response = requests.post(url, headers=headers, json=data)
         response.raise_for_status()  # Raise an error for bad responses (4xx and 5xx)
@@ -41,19 +38,21 @@ def home():
 
 @app.route("/chat", methods=["POST"])
 def chat():
-    # Get the user input from the request
+    # Get the user input and model from the request
     user_input = request.json.get("message")
+    model_name = request.json.get("model", "llama3.2")  # Default to "llama3.2" if no model is provided
 
     if not user_input:
         return jsonify({"error": "No input provided"}), 400
 
-    # Call the llama3 function with user input
-    model_response = llama3(user_input)
+    # Call the llama3 function with user input and the selected model
+    model_response = llama3(user_input, model_name)
 
     return jsonify({"response": model_response})  # Return the model response
 
 if __name__ == "__main__":
     app.run(debug=True)
+
 
 
 

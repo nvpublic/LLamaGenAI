@@ -3,40 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat with Model</title>
-</head>
-<body>
-    <h1>Chat with LLaMA Model</h1>
-    <form id="chatForm">
-        <label for="message">Message:</label>
-        <input type="text" id="message" name="message" required>
-        <button type="submit">Send</button>
-    </form>
-
-    <h2>Response:</h2>
-    <pre id="response"></pre>
-
+    <title>LLaMA Chat</title>
     <script>
-        document.getElementById("chatForm").addEventListener("submit", function(event) {
-            event.preventDefault();
+        // Function to handle form submission and send POST request
+        async function sendMessage() {
             const message = document.getElementById("message").value;
+            const model = document.getElementById("model").value;  // Hidden field, always "llama3.2"
 
-            fetch("/chat", {
+            if (!message) {
+                alert("Please enter a message");
+                return;
+            }
+
+            const response = await fetch("/chat", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ message: message })
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById("response").textContent = JSON.stringify(data, null, 2);
-            })
-            .catch(error => {
-                document.getElementById("response").textContent = "Error: " + error;
+                body: JSON.stringify({
+                    message: message,
+                    model: model
+                })
             });
-        });
+
+            const data = await response.json();
+
+            // Display the response from the model
+            document.getElementById("response").textContent = data.response || data.error || "No response";
+        }
     </script>
+</head>
+<body>
+    <h1>Chat with LLaMA Model</h1>
+
+    <form onsubmit="event.preventDefault(); sendMessage();">
+        <label for="message">Message:</label><br>
+        <input type="text" id="message" name="message" required><br><br>
+
+        <!-- Hidden field to default to LLaMA 3.2 -->
+        <input type="hidden" id="model" name="model" value="llama3.2">
+
+        <input type="submit" value="Send Message">
+    </form>
+
+    <h2>Model Response:</h2>
+    <p id="response">Waiting for response...</p>
 </body>
 </html>
+
 
