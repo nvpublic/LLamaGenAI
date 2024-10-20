@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with Model</title>
+</head>
+<body>
+    <h1>Chat with LLaMA Model</h1>
+    <form id="chatForm">
+        <label for="message">Message:</label>
+        <input type="text" id="message" name="message" required>
+        <button type="submit">Send</button>
+    </form>
+
+    <h2>Response:</h2>
+    <pre id="response"></pre>
+
+    <script>
+        document.getElementById("chatForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const message = document.getElementById("message").value;
+
+            fetch("/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("response").textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                document.getElementById("response").textContent = "Error: " + error;
+            });
+        });
+    </script>
+</body>
+</html>
+
