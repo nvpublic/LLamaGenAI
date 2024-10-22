@@ -56,9 +56,22 @@ source venv/bin/activate
 ### Step 3: Install Dependencies
 Create `requirements.txt` (if not already in the repository):
 ```txt
-Flask==2.1.2
-Flask-CORS==3.0.10
+blinker==1.8.2
+certifi==2024.8.30
+charset-normalizer==2.1.1
+click==8.1.7
+flask==3.0.3
+Flask-Cors==3.0.10
+idna==3.10
+importlib-metadata==8.5.0
+itsdangerous==2.2.0
+jinja2==3.1.4
+MarkupSafe==2.1.5
 requests==2.28.1
+six==1.16.0
+urllib3==1.26.20
+werkzeug==3.0.4
+zipp==3.20.2
 ```
 Install the dependencies:
 ```bash
