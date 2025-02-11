@@ -50,7 +50,43 @@ def chat():
 
     # Call the llama3 function with user input and the selected model
     model_response = llama3(user_input, model_name)
+graph TD
+    A[Start] --> B[Initialize Flask App]
+    B --> C[Enable CORS]
+    C --> D[Define URL and Translator]
+    D --> E[Define llama3 Function]
+    E --> F[Define Home Route]
+    F --> G[Define Chat Route]
+    G --> H[Get User Input and Model]
+    H --> I{Is User Input Provided?}
+    I -- No --> J[Return Error Response]
+    I -- Yes --> K[Detect Input Language]
+    K --> L[Call llama3 Function]
+    L --> M{Is Input Language English?}
+    M -- No --> N[Translate Model Response]
+    M -- Yes --> O[Return Model Response]
+    O --> P[End]
 
+    style A fill:#f9f,stroke:#333,stroke-width:4px
+    style P fill:#f9f,stroke:#333,stroke-width:4px    graph TD
+        A[Start] --> B[Initialize Flask App]
+        B --> C[Enable CORS]
+        C --> D[Define URL and Translator]
+        D --> E[Define llama3 Function]
+        E --> F[Define Home Route]
+        F --> G[Define Chat Route]
+        G --> H[Get User Input and Model]
+        H --> I{Is User Input Provided?}
+        I -- No --> J[Return Error Response]
+        I -- Yes --> K[Detect Input Language]
+        K --> L[Call llama3 Function]
+        L --> M{Is Input Language English?}
+        M -- No --> N[Translate Model Response]
+        M -- Yes --> O[Return Model Response]
+        O --> P[End]
+    
+        style A fill:#f9f,stroke:#333,stroke-width:4px
+        style P fill:#f9f,stroke:#333,stroke-width:4px
     # Translate the response to the detected language if necessary
     if input_language != 'en':
         model_response = translator.translate(model_response, dest=input_language).text
